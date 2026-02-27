@@ -6,46 +6,31 @@ SIM_69 := XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 # ─────────────────────────────────────────────
 # Help
 # ─────────────────────────────────────────────
-help:
-	@echo ""
-	@echo "Usage: make <target>"
-	@echo ""
-	@echo "Setup"
-	@echo "  setup       Install dependencies + code generation"
-	@echo "  gen         Code generation only (build_runner)"
-	@echo ""
-	@echo "Development"
-	@echo "  run         Launch app on simulator"
-	@echo "  test        Run unit tests"
-	@echo "  analyze     Run static analysis"
-	@echo "  build       iOS release build"
-	@echo ""
-	@echo "Screenshots"
-	@echo "  ss-ja       Capture all screenshots in Japanese (6.9\")"
-	@echo "  ss-en       Capture all screenshots in English (6.9\")"
-	@echo ""
+help: ## ヘルプを表示
+	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) \
+		| awk 'BEGIN {FS = ":.*##"}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
 # ─────────────────────────────────────────────
 # Setup & Development
 # ─────────────────────────────────────────────
-setup:
+setup: ## 依存関係のインストール + コード生成
 	flutter pub get
 	dart run build_runner build --delete-conflicting-outputs
 	flutter gen-l10n
 
-gen:
+gen: ## コード生成のみ (build_runner)
 	dart run build_runner build --delete-conflicting-outputs
 
-run:
+run: ## シミュレーターで起動
 	flutter run -d iphone
 
-test:
+test: ## ユニットテストを実行
 	flutter test
 
-analyze:
+analyze: ## 静的解析を実行
 	flutter analyze
 
-build:
+build: ## iOS リリースビルド
 	flutter build ios --release
 
 # ─────────────────────────────────────────────
@@ -66,7 +51,7 @@ _sim-lang:
 # ─────────────────────────────────────────────
 # Automated screenshot capture via flutter drive
 # ─────────────────────────────────────────────
-ss-ja:
+ss-ja: ## 日本語スクリーンショット一括撮影 (6.9")
 	@$(MAKE) _sim-lang LANG=ja LOCALE=ja_JP
 	SCREENSHOT_LANG=ja flutter drive \
 		--driver=test_driver/integration_test.dart \
@@ -79,7 +64,7 @@ ss-ja:
 	@echo "Resetting Flutter build target to lib/main.dart..."
 	flutter build ios --release
 
-ss-en:
+ss-en: ## 英語スクリーンショット一括撮影 (6.9")
 	@$(MAKE) _sim-lang LANG=en LOCALE=en_US
 	SCREENSHOT_LANG=en flutter drive \
 		--driver=test_driver/integration_test.dart \
@@ -91,3 +76,4 @@ ss-en:
 	find docs/screenshots/en -name "*.png" -exec magick {} -background white -alpha remove -alpha off -depth 8 {} \;
 	@echo "Resetting Flutter build target to lib/main.dart..."
 	flutter build ios --release
+

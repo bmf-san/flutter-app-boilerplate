@@ -7,9 +7,9 @@ TODO: アプリの説明
 [![Dart Version](https://img.shields.io/badge/Dart-3.10.7+-0175C2?logo=dart)](https://dart.dev)
 ![License](https://img.shields.io/badge/License-Private-red)
 
-**バージョン**: TODO: x.x.x+xx  
-**対応プラットフォーム**: iOS  
-**アーキテクチャ**: Clean Architecture  
+**バージョン**: TODO: x.x.x+xx
+**対応プラットフォーム**: iOS
+**アーキテクチャ**: Clean Architecture
 **状態管理**: Riverpod 2.x
 
 ## 概要

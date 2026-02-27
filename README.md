@@ -1,6 +1,6 @@
 # flutter-app-boilerplate
 
-実際のプロダクションアプリをベースにした iOS 向け Flutter アプリテンプレートです。  
+実際のプロダクションアプリをベースにした iOS 向け Flutter アプリテンプレートです。
 採用スタック: **Riverpod · Hive · Freezed · クリーンアーキテクチャ · Material 3 (Slate テーマ) · AdMob · l10n (ja/en)**
 
 ---
@@ -131,7 +131,7 @@ make ss-en    # 英語スクリーンショット一括撮影
 
 ## スクリーンショット
 
-`flutter drive` で自動撮影し `docs/screenshots/<lang>/6.9/` に保存されます。  
+`flutter drive` で自動撮影し `docs/screenshots/<lang>/6.9/` に保存されます。
 App Store Connect の要件に合わせて ImageMagick でアルファチャンネルを 8-bit RGB に変換します。
 
 事前準備:

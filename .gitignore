@@ -1,0 +1,54 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# iOS
+ios/Pods/
+ios/Flutter/Flutter.podspec
+ios/.symlinks/
+ios/build/
+
+# App icon source (keep icon.png out of the repo if it contains private branding)
+# icon.png
+
+# Generated l10n files (optional – keep if you want to generate locally)
+# lib/l10n/app_localizations*.dart

@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "appTitle": "My App",
+  "@appTitle": {
+    "description": "The title of the application."
+  },
+  "noItems": "No items yet.",
+  "@noItems": {
+    "description": "Shown when the list is empty."
+  },
+  "settings": "Settings",
+  "@settings": {}
+}

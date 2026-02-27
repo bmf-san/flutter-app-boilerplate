@@ -1,0 +1,69 @@
+name: flutter_app_boilerplate
+description: "Flutter app boilerplate – iOS-first, clean architecture, Riverpod + Hive"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.10.7 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Local Database
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Routing (uncomment if using multi-screen routing)
+  # go_router: ^14.6.2
+
+  # Utilities
+  intl: any
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  equatable: ^2.0.5
+  uuid: ^4.3.3
+
+  # Ads (remove if not using AdMob)
+  google_mobile_ads: ^5.2.0
+
+  cupertino_icons: ^1.0.8
+  package_info_plus: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+  # Code Generation
+  build_runner: ^2.4.8
+  riverpod_generator: ^2.6.4
+  freezed: ^2.5.8
+  json_serializable: ^6.9.5
+  hive_generator: ^2.0.1
+
+  # Testing
+  mocktail: ^1.0.4
+
+  # Icon Generation
+  flutter_launcher_icons: ^0.14.1
+
+# App icon – place icon.png (1024x1024, no alpha for iOS) at project root
+flutter_launcher_icons:
+  android: false
+  ios: true
+  image_path: "icon.png"
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+  generate: true

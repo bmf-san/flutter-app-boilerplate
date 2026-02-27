@@ -1,150 +1,150 @@
 # flutter-app-boilerplate
 
-iOS-first Flutter app template based on real production apps.  
-Opinionated stack: **Riverpod · Hive · Freezed · Clean Architecture · Material 3 (Slate theme) · AdMob · l10n (ja/en)**
+実際のプロダクションアプリをベースにした iOS 向け Flutter アプリテンプレートです。  
+採用スタック: **Riverpod · Hive · Freezed · クリーンアーキテクチャ · Material 3 (Slate テーマ) · AdMob · l10n (ja/en)**
 
 ---
 
-## Stack
+## スタック
 
-| Layer | Package |
+| レイヤー | パッケージ |
 |---|---|
-| State Management | flutter_riverpod + riverpod_generator |
-| Local Storage | hive + hive_generator |
-| Models | json_serializable (data layer), equatable (domain entities) |
-| Theme | Material 3, shadcn/ui slate scale, dark/light |
-| Localization | flutter_localizations (ja / en) |
-| Ads | google_mobile_ads (abstracted, removable) |
-| Testing | flutter_test, integration_test, mocktail |
-| Screenshots | flutter drive + xcrun simctl + ImageMagick |
+| 状態管理 | flutter_riverpod + riverpod_generator |
+| ローカルDB | hive + hive_generator |
+| モデル | json_serializable (data層), equatable (domain entity) |
+| テーマ | Material 3, shadcn/ui slate スケール, ライト/ダーク |
+| 多言語対応 | flutter_localizations (ja / en) |
+| 広告 | google_mobile_ads (抽象化済み・削除可能) |
+| テスト | flutter_test, integration_test, mocktail |
+| スクリーンショット | flutter drive + xcrun simctl + ImageMagick |
 
 ---
 
-## Directory structure
+## ディレクトリ構成
 
 ```
 lib/
-  main.dart                  # Production entry point
-  main_screenshot.dart       # Entry point for screenshot tests
-  app.dart                   # MaterialApp + theme + l10n
+  main.dart                  # 本番エントリーポイント
+  main_screenshot.dart       # スクリーンショットテスト用エントリーポイント
+  app.dart                   # MaterialApp + テーマ + l10n
   core/
-    ads/                     # AdMob initializer
+    ads/                     # AdMob 初期化
     config/                  # AppConfig (dev/prod)
     constants/               # StorageKeys, AppConstants
-    error/                   # Failure classes
+    error/                   # Failure クラス
     theme/                   # AppTheme (slate), AppColors
   data/
-    datasources/local/       # Hive data sources
-    models/                  # Hive + json_serializable models
-    repositories/            # Repository implementations
+    datasources/local/       # Hive データソース
+    models/                  # Hive + json_serializable モデル
+    repositories/            # リポジトリ実装
   domain/
-    entities/                # Pure Dart entities (Equatable)
-    repositories/            # Repository interfaces
-    usecases/                # Use case classes
-  l10n/                      # .arb files (app_en.arb, app_ja.arb)
+    entities/                # Pure Dart エンティティ (Equatable)
+    repositories/            # リポジトリインターフェース
+    usecases/                # ユースケース
+  l10n/                      # .arb ファイル (app_en.arb, app_ja.arb)
   presentation/
-    providers/               # Riverpod notifiers
-    screens/                 # Screen widgets
-    widgets/                 # Shared widgets (BannerAdWidget, ...)
+    providers/               # Riverpod ノティファイア
+    screens/                 # 画面ウィジェット
+    widgets/                 # 共通ウィジェット (BannerAdWidget など)
 integration_test/
-  screenshot_test.dart       # flutter drive screenshot test
+  screenshot_test.dart       # flutter drive スクリーンショットテスト
 test_driver/
   integration_test.dart
 ```
 
 ---
 
-## Getting started
+## はじめかた
 
-### 1. Use this template
+### 1. テンプレートを使う
 
-Click **"Use this template"** on GitHub to create a new repository.
+GitHub の **"Use this template"** ボタンから新しいリポジトリを作成します。
 
-### 2. Rename the app
+### 2. アプリ名を変更する
 
 - `pubspec.yaml` → `name:`, `description:`
 - `lib/app.dart` → `title:`
 - `lib/core/constants/app_constants.dart` → `appName`, `privacyPolicyUrl`
 - `lib/l10n/app_en.arb` + `app_ja.arb` → `appTitle`
-- Xcode → Runner target → Display Name, Bundle Identifier
+- Xcode → Runner ターゲット → Display Name, Bundle Identifier
 
-### 3. Set up AdMob (or remove it)
+### 3. AdMob の設定（または削除）
 
-**To use AdMob:**
-- `lib/core/config/app_config_prod.dart` → replace `TODO_REPLACE_WITH_*` with real IDs
-- `ios/Runner/Info.plist` → add `GADApplicationIdentifier`
+**AdMob を使う場合:**
+- `lib/core/config/app_config_prod.dart` → `TODO_REPLACE_WITH_*` を実際の ID に置換
+- `ios/Runner/Info.plist` → `GADApplicationIdentifier` を追加
 
-**To remove AdMob:**
-- Delete `lib/core/ads/`, `lib/presentation/widgets/banner_ad_widget.dart`
-- Remove `google_mobile_ads` from `pubspec.yaml`
-- Remove `await initializeAds()` from `main.dart`
+**AdMob を使わない場合:**
+- `lib/core/ads/`, `lib/presentation/widgets/banner_ad_widget.dart` を削除
+- `pubspec.yaml` から `google_mobile_ads` を削除
+- `main.dart` から `await initializeAds()` を削除
 
-### 4. Set your simulator UDID
+### 4. シミュレーターの UDID を設定する
 
-Edit `Makefile`:
+`Makefile` を編集:
 ```makefile
 SIM_69 := YOUR_SIMULATOR_UDID_HERE
 ```
 
-Find it with:
+UDID の確認方法:
 ```bash
 xcrun simctl list devices | grep "iPhone 17 Pro Max"
 ```
 
-### 5. Install & run
+### 5. インストール & 起動
 
 ```bash
 make setup   # flutter pub get + build_runner + gen-l10n
-make run     # launch on simulator
+make run     # シミュレーターで起動
 ```
 
 ---
 
-## Development commands
+## 開発コマンド
 
 ```bash
-make setup    # Install dependencies + code generation
-make gen      # build_runner only
-make run      # Run on simulator
-make test     # Unit tests
-make analyze  # Flutter analyze
-make build    # iOS release build
-make ss-ja    # Capture all screenshots in Japanese
-make ss-en    # Capture all screenshots in English
+make setup    # 依存関係のインストール + コード生成
+make gen      # build_runner のみ
+make run      # シミュレーターで起動
+make test     # ユニットテスト
+make analyze  # 静的解析
+make build    # iOS リリースビルド
+make ss-ja    # 日本語スクリーンショット一括撮影
+make ss-en    # 英語スクリーンショット一括撮影
 ```
 
 ---
 
-## Adding a new feature
+## 新しい機能の追加手順
 
-1. Add entity in `lib/domain/entities/`
-2. Add repository interface in `lib/domain/repositories/`
-3. Add use cases in `lib/domain/usecases/`
-4. Add Hive model in `lib/data/models/` (register adapter in `main.dart`)
-5. Add data source in `lib/data/datasources/local/`
-6. Add repository impl in `lib/data/repositories/`
-7. Add Riverpod provider in `lib/presentation/providers/`
-8. Add screen in `lib/presentation/screens/`
-9. Run `make gen` to regenerate code
+1. `lib/domain/entities/` にエンティティを追加
+2. `lib/domain/repositories/` にリポジトリインターフェースを追加
+3. `lib/domain/usecases/` にユースケースを追加
+4. `lib/data/models/` に Hive モデルを追加（`main.dart` でアダプターを登録）
+5. `lib/data/datasources/local/` にデータソースを追加
+6. `lib/data/repositories/` にリポジトリ実装を追加
+7. `lib/presentation/providers/` に Riverpod プロバイダーを追加
+8. `lib/presentation/screens/` に画面を追加
+9. `make gen` でコードを再生成
 
 ---
 
-## Screenshots
+## スクリーンショット
 
-Screenshots are automatically taken via `flutter drive` and saved to `docs/screenshots/<lang>/6.9/`.  
-Alpha channel is stripped to 8-bit RGB (required by App Store Connect) using ImageMagick.
+`flutter drive` で自動撮影し `docs/screenshots/<lang>/6.9/` に保存されます。  
+App Store Connect の要件に合わせて ImageMagick でアルファチャンネルを 8-bit RGB に変換します。
 
-Prerequisites:
+事前準備:
 - [ImageMagick](https://imagemagick.org/) (`brew install imagemagick`)
-- iPhone 17 Pro Max (6.9") simulator booted
+- iPhone 17 Pro Max (6.9") シミュレーターが起動していること
 
 ```bash
-make ss-ja   # Japanese screenshots
-make ss-en   # English screenshots
+make ss-ja   # 日本語スクリーンショット
+make ss-en   # 英語スクリーンショット
 ```
 
 ---
 
-## License
+## ライセンス
 
 MIT

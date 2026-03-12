@@ -1,4 +1,4 @@
-.PHONY: help setup gen run test analyze build ss-ja ss-en _sim-lang
+.PHONY: help setup gen run test analyze build ss-ja ss-en _sim-lang sync-public
 
 # ── REPLACE: your iPhone 17 Pro Max (6.9") simulator UDID ─────────────────────
 SIM_69 := XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -53,6 +53,7 @@ _sim-lang:
 # ─────────────────────────────────────────────
 ss-ja: ## 日本語スクリーンショット一括撮影 (6.9")
 	@$(MAKE) _sim-lang LANG=ja LOCALE=ja_JP
+	@mkdir -p docs/screenshots/ja/6.9
 	SCREENSHOT_LANG=ja flutter drive \
 		--driver=test_driver/integration_test.dart \
 		--target=integration_test/screenshot_test.dart \
@@ -61,11 +62,10 @@ ss-ja: ## 日本語スクリーンショット一括撮影 (6.9")
 		-d $(SIM_69)
 	@echo "Converting screenshots to RGB 8-bit (removing alpha)..."
 	find docs/screenshots/ja -name "*.png" -exec magick {} -background white -alpha remove -alpha off -depth 8 {} \;
-	@echo "Resetting Flutter build target to lib/main.dart..."
-	flutter build ios --release
 
 ss-en: ## 英語スクリーンショット一括撮影 (6.9")
 	@$(MAKE) _sim-lang LANG=en LOCALE=en_US
+	@mkdir -p docs/screenshots/en/6.9
 	SCREENSHOT_LANG=en flutter drive \
 		--driver=test_driver/integration_test.dart \
 		--target=integration_test/screenshot_test.dart \
@@ -74,6 +74,11 @@ ss-en: ## 英語スクリーンショット一括撮影 (6.9")
 		-d $(SIM_69)
 	@echo "Converting screenshots to RGB 8-bit (removing alpha)..."
 	find docs/screenshots/en -name "*.png" -exec magick {} -background white -alpha remove -alpha off -depth 8 {} \;
-	@echo "Resetting Flutter build target to lib/main.dart..."
-	flutter build ios --release
+
+sync-public: ## docs/screenshots を public/screenshots に同期
+	@echo "Syncing screenshots to public/..."
+	@mkdir -p public/screenshots
+	@cp -r docs/screenshots/ja public/screenshots/
+	@cp -r docs/screenshots/en public/screenshots/
+	@echo "Done."
 
